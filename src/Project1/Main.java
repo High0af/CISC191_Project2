@@ -11,7 +11,10 @@ import java.util.ArrayList;
 
 /**
  * author: Johnny Hoang
- * to do: A program that uses console to imitate an online ordering program. Take inputs from user through console.
+ * 
+ * to do: implement GUI
+ * 
+ * Version 1.0 (Current): A program that uses console to imitate an online ordering program. Take inputs from user through console.
  * Version 2.0: take input from GUI that is send to console. 
  */
 public class Main {
