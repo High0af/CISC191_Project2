@@ -9,9 +9,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-/*
+/**
  * author: Johnny Hoang
- * to do: finish implementing Exception handling. Create i/o. Create a drink class
+ * to do: A program that uses console to imitate an online ordering program. Take inputs from user through console.
+ * Version 2.0: take input from GUI that is send to console. 
  */
 public class Main {
 	// ArrayLists that will contain the menu
@@ -65,7 +66,13 @@ public class Main {
 
 		}
 
-		// Determines if its just one order or multiple orders
+		/**
+		 * Determines if its just one order or multiple orders 
+		 * @throws IllegalArgumentException
+		 * @throws IOException
+		 * @throws CustomIllegalArgumentException
+		 * @throws CreditCardException
+		 */
 		private void setSingleOrMultiple() throws IllegalArgumentException, IOException, CustomIllegalArgumentException, CreditCardException 
 		{
 			try {
@@ -110,8 +117,12 @@ public class Main {
 			}
 		}
 
-		/*
-		 * print out food categories and input options.
+		/**
+		 * 
+		 * @throws IllegalArgumentException
+		 * @throws IOException
+		 * @throws CustomIllegalArgumentException
+		 * @throws CreditCardException
 		 */
 		private void showFoodType() throws IllegalArgumentException, IOException, CustomIllegalArgumentException, CreditCardException 
 		{
@@ -119,12 +130,14 @@ public class Main {
 			// checker in setSingleOrMultiple()
 			// customerOrder list out the objects that the customer(s) ordered.
 			// customerOrder is also used in multipleCustomerOrder to add to ArrayList
-			try {
+			try 
+			{
 				if (multiple == false) 
 				{
 					System.out.print(
 							"Your food order: " + customerOrder + "\nYour drink order" + customerDrinkOrder + "\n");
 				} 
+				// multiple == true
 				else 
 				{
 					System.out.println("Each order is in a separate box\n"
@@ -132,19 +145,17 @@ public class Main {
 							+ "Your food order: " + multipleCustomerOrder + "\nYour drink order: "
 							+ multipleCustomerDrinkOrder + "\n");
 				}
-				
 				//message used in both array
 				System.out.println(
 						"\nPlease enter one of the following to show their choices: \n" + "Sushi // Cooked // Drinks"
 								+ "\nor type BACK or DONE\n" + "Entering BACK here will clear all orders \n"
 								+ "Enter total to see calculated price" + "\nPlease enter below: \n"
 								);
-
-				// take the user's input as command to go to next step which will loop back here
-				// (showSushi, showCooked, ShowDrinks)
+				// take the user's input as command to go to next step
+				// (showSushi, showCooked, ShowDrinks, next order, previous order, total)
 				input = scan.nextLine();
 				String lowerCase = input.toLowerCase();
-				// the 3 methods to show menu are below this method
+				// jump to methods that show the menu
 				if (lowerCase.equals("sushi")) 
 				{
 					this.showSushi();
@@ -185,6 +196,7 @@ public class Main {
 					}
 
 					System.out.println("-------\n" + "Your total price is : " + total + "\n");
+					//reset field
 					total = 0;
 					// loop back
 					this.showFoodType();
@@ -262,7 +274,7 @@ public class Main {
 			}
 		}
 
-		/*
+		/**
 		 * methods below are to show the menu and show ingredients, show price, and add
 		 * the order to the array for Food and Drink object
 		 */
@@ -285,7 +297,7 @@ public class Main {
 
 			// check if input match with any names from ArrayList
 			input = scan.nextLine();
-//			String lowerCase = input.toLowerCase();
+			// String lowerCase = input.toLowerCase();
 
 			// toLowerCase method and contains method to allows for differences in entering
 			// the same input
@@ -308,7 +320,13 @@ public class Main {
 			}
 		}
 
-		// same with showSushi() method above but different ArrayList
+		/**
+		 *  same with showSushi() method above but different ArrayList
+		 * @throws IllegalArgumentException
+		 * @throws IOException
+		 * @throws CustomIllegalArgumentException
+		 * @throws CreditCardException
+		 */
 		private void showCooked() throws IllegalArgumentException, IOException, CustomIllegalArgumentException, CreditCardException 
 		{
 			System.out.println(
@@ -340,7 +358,13 @@ public class Main {
 			}
 		}
 
-		// same as above but for drink
+		/**
+		 *  same as above but for drink
+		 * @throws IllegalArgumentException
+		 * @throws IOException
+		 * @throws CustomIllegalArgumentException
+		 * @throws CreditCardException
+		 */
 		private void showDrink() throws IllegalArgumentException, IOException, CustomIllegalArgumentException, CreditCardException 
 		{
 			// print out the sushi menu, print out string from toString in Sushi and Cooked
@@ -360,7 +384,7 @@ public class Main {
 
 			// check if input match with any names from ArrayList
 			input = scan.nextLine();
-//			String lowerCase = input.toLowerCase();
+			// String lowerCase = input.toLowerCase();
 
 			// toLowerCase method and contains method to allows for differences in entering
 			// the same input
@@ -382,11 +406,8 @@ public class Main {
 				this.showDrink();
 			}
 		}
-		/*
-		 * end shows food and drink methods
-		 */
 
-		/*
+		/**
 		 * method to either add food object to customerOrder or show the food object's
 		 * info/option
 		 */
@@ -577,7 +598,15 @@ public class Main {
 			}
 		}
 
-		// same as the method above but for drink ArrayList
+		/**
+		 *  same as the method above but for drink ArrayList
+		 * @param list
+		 * @param userInput
+		 * @throws IllegalArgumentException
+		 * @throws IOException
+		 * @throws CustomIllegalArgumentException
+		 * @throws CreditCardException
+		 */
 		public void confirmAddingDrinkToOrder(ArrayList<Drink> list, String userInput) throws IllegalArgumentException, IOException, CustomIllegalArgumentException, CreditCardException 
 		{
 			// copying the basic info from all objects in ArrayList<Food> into a string
@@ -663,24 +692,61 @@ public class Main {
 				this.confirmAddingDrinkToOrder(list, userInput);
 			}
 		}
+		
+		/**
+		 *  Method used to create a customer object. uses the methods below
+		 * @throws CreditCardException
+		 * @throws IOException
+		 * @throws IllegalArgumentException
+		 * @throws CustomIllegalArgumentException
+		 */
+		private void enterInformation() throws CreditCardException, IOException, IllegalArgumentException, CustomIllegalArgumentException
+		{
+			System.out.println(
+					"Please enter your name, credit card numbers, expiration date, and code in a new line by typing enter after each. \n"
+							+ "To go back, type BACK");
+			setName();
+			System.out.println("Your name: " + customerName);
+			
+			setCreditCardNum();
+			System.out.println("Your card number: " + creditCardNum);
+			
+			setExpDate();
+			System.out.println("Your card expiration date: " + cardExpDate);
+			
+			setCardCode();
+			System.out.println("Your card code: " + cvcCode);
+			
+			customer1 = new Customer(customerName, creditCardNum, cardExpDate, cvcCode);
+			this.orderCompleted();
+			// jump to next step
+		}
 
-		// After order is complete, retrieve name from user. Method will repeat itself
-		// until input is appropriate.
-		// Method is used in enterInformation method to create a customer object
+		/**
+		 *  After order is complete, retrieve name from user. Method will repeat itself until input is appropriate.
+		 *  Method is used in enterInformation method to create a customer object
+		 * @throws IllegalArgumentException
+		 * @throws IOException
+		 * @throws CreditCardException
+		 * @throws CustomIllegalArgumentException
+		 */
 		private void setName() throws IllegalArgumentException, IOException, CreditCardException, CustomIllegalArgumentException
 		{
 			// makes sure input contains both first and last name
 			try {
 				System.out.println("\n" + "Please enter your first name and last name now: ");
 				String input = scan.nextLine();
+				// loop back if user want to change order
 				if (input.equals("BACK")) 
 				{
 					this.showFoodType();
 				}
+				// exception if no input is entered
 				if (!input.contains(" ")) 
 				{
 					throw new CreditCardException(0.0, input);
 				}
+				// set field
 				else 
 				{
 					customerName = input;
@@ -694,20 +760,21 @@ public class Main {
 
 		}
 
-		// Retrieve credit number from user. Method will repeat itself until input is
-		// appropriate.
+		/**
+		 *  Retrieve credit number from user. Method will repeat itself until input is appropriate.
+		 */
 		private void setCreditCardNum() 
 		{
 			// checks to see if inputed credit card number contains 16 digits
 			try {
 				System.out.println("Please enter your card number");
 				String input = scan.nextLine();
-				char[] numCheck = input.toCharArray();
-				if (numCheck.length != 16) 
+				//exception if != 16
+				if (input.length() != 16) 
 				{
-					System.out.println(numCheck.length);
 					throw new CreditCardException(" ", input);
 				} 
+				// set field
 				else 
 				{
 					creditCardNum = input;
@@ -720,8 +787,9 @@ public class Main {
 			}
 		}
 
-		// Retrieve expiration date of credit card from user. Method will repeat itself
-		// until input is appropriate
+		/**
+		 *  Retrieve expiration date of credit card from user. Method will repeat itself until input is appropriate
+		 */
 		private void setExpDate() 
 		{
 			// checks to see if the expiration date has not passed current year
@@ -730,14 +798,17 @@ public class Main {
 				String cardExp = scan.nextLine();
 				String year = cardExp.substring(cardExp.indexOf("/") + 1);
 				int numCheck = Integer.parseInt(year);
+				// exception if invalid year
 				if (numCheck < 22) 
 				{
 					throw new CreditCardException(0, cardExp);
 				}
+				// exception if space is entered
 				else if (cardExp.contains(" ")) 
 				{
 					throw new CreditCardException("space");
 				} 
+				// set field
 				else 
 				{
 					cardExpDate = cardExp;
@@ -750,19 +821,21 @@ public class Main {
 			}
 		}
 
-		// Retrieve card code of credit card from user. Method will repeat itself until
-		// input is appropriate
+		/**
+		 *  Retrieve card code of credit card from user. Method will repeat itself until input is appropriate
+		 */
 		private void setCardCode() 
 		{
 			// checks to see if security code has 3 digits
 			try {
 				System.out.println("Please enter your 3 digit security code");
 				String code = scan.nextLine();
-				char[] codeCheck = code.toCharArray();
-				if (codeCheck.length != 3) 
+				// exception if input is != 3
+				if (code.length() != 3) 
 				{
 					throw new CreditCardException('1', code);
 				} 
+				// set field
 				else 
 				{
 					cvcCode = code;
@@ -775,33 +848,23 @@ public class Main {
 			}
 		}
 
-		// Method used to create a customer object
-		private void enterInformation() throws CreditCardException, IOException, IllegalArgumentException, CustomIllegalArgumentException
-		{
-			System.out.println(
-					"Please enter your name, credit card numbers, expiration date, and code in a new line by typing enter after each. \n"
-							+ "To go back, type BACK");
-			setName();
-			System.out.println("Your name: " + customerName);
-			setCreditCardNum();
-			System.out.println("Your card number: " + creditCardNum);
-			setExpDate();
-			System.out.println("Your card expiration date: " + cardExpDate);
-			setCardCode();
-			System.out.println("Your card code: " + cvcCode);
-			customer1 = new Customer(customerName, creditCardNum, cardExpDate, cvcCode);
-			this.orderCompleted();
-		}
-
-		// Checks to see if order was single or multiple. Calculates total cost and
-		// calls on createReceipt to create a receipt.txt for the restaurants "records"
+		/**
+		 *  Checks to see if order was single or multiple. Calculates total cost and
+		 *  calls on createReceipt to create a receipt.txt for the restaurants "records"
+		 * @throws IOException
+		 * @throws IllegalArgumentException
+		 * @throws CreditCardException
+		 * @throws CustomIllegalArgumentException
+		 */
 		private void orderCompleted() throws IOException, IllegalArgumentException, CreditCardException, CustomIllegalArgumentException 
 		{
 			double total = 0;
 			double tax = 0.08;
 			double finalTotal;
+			// single order
 			if (multiple == false) 
 			{
+				// for loop to get all price
 				for (int i = 0; i < customerDrinkOrder.size(); i++) 
 				{
 					total += customerDrinkOrder.get(i).getPrice();
@@ -810,14 +873,18 @@ public class Main {
 				{
 					total += customerOrder.get(i).getPrice();
 				}
+				// calculate total with taxes
 				finalTotal = (total * tax) + total;
 				System.out.println(
 						"Thank you " + customer1.getName() + " for making your order of: \n" + customerOrder.toString()
 								+ "\n" + customerDrinkOrder.toString() + "\n" + "Your total will be " + finalTotal);
+				// create a receipt that will be saved on the computer
 				createReceiptSingle(customerOrder, customerDrinkOrder);
 			}
+			// multiple order
 			else 
 			{
+				// nested for loop to get all prices from 2d array.
 				for (int i = 0; i < multipleCustomerDrinkOrder.size(); i++)
 				{
 					for (int j = 0; j < multipleCustomerDrinkOrder.get(i).size(); j++) 
@@ -833,13 +900,16 @@ public class Main {
 						total += multipleCustomerOrder.get(i).get(j).getPrice();
 					}
 				}
+				// calculate total + tax
 				finalTotal = (total * tax) + total;
 				System.out.println("Thank you " + customer1.getName() + " for making your order of: " + ""
 						+ multipleCustomerOrder.toString() + "\n" + multipleCustomerDrinkOrder.toString() + "\n"
 						+ "Your total will be " + finalTotal);
+				// create a receipt that will be saved on the computer
 				createReceiptMultiple(multipleCustomerOrder, multipleCustomerDrinkOrder);
 			}
 
+			// program completed. Codes for reset.
 			System.out.println("Enter RESET to go back to the beginning");
 			input = scan.nextLine().toLowerCase();
 			if (input.equals("reset")) 
@@ -848,8 +918,10 @@ public class Main {
 				multipleCustomerOrder.clear();
 				customerDrinkOrder.clear();
 				multipleCustomerDrinkOrder.clear();
+				// loop to beginning
 				this.greeting();
 			} 
+			// if input is != reset
 			else 
 			{
 				System.out.println("enter RESET to restart the program");
@@ -857,50 +929,71 @@ public class Main {
 			}
 		}
 
-		// Creates a receipt for a single order for restaurant owners to have on file.
+		/**
+		 *  Creates a receipt for a single order for restaurant owners to have on file.
+		 * @param foodOrder
+		 * @param drinkOrder
+		 * @throws IOException
+		 */
 		private void createReceiptSingle(ArrayList<Food> foodOrder, ArrayList<Drink> drinkOrder) throws IOException 
 		{
 			double total = 0;
 			double tax = 0.08;
 			double finalTotal = 0;
+			// iO set up
 			File receipt = new File("receipt.txt");
 			FileWriter fw = new FileWriter(receipt);
 			PrintWriter pw = new PrintWriter(fw);
+			// get the current time
 			LocalDateTime dateTime = LocalDateTime.now();
 			DateTimeFormatter formattedDateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 			String finalDateTime = dateTime.format(formattedDateTime);
+			// print
 			pw.println("Java Restaurant \n" + "7250 Mesa College Dr, San Diego, CA 92111 \n \n" + finalDateTime + "\n"
 					+ "--------------- \n" + "Name: " + customer1.getName() + "\t \t" + "Guest: 1");
+			// drink order total
 			for (int i = 0; i < drinkOrder.size(); i++) 
 			{
 				pw.println(drinkOrder.get(i) + "\t\t" + drinkOrder.get(i).getPrice());
 				total += drinkOrder.get(i).getPrice();
 			}
+			// food order total
 			for (int i = 0; i < foodOrder.size(); i++) 
 			{
 				pw.println(foodOrder.get(i) + "\t\t" + foodOrder.get(i).getPrice());
 				total += foodOrder.get(i).getPrice();
 			}
+			// all total
 			finalTotal = (total * tax) + total;
 			pw.println("------------ \n" + "Subtotal: \t\t" + total + "\n" + "Tax \t\t" + (tax * total) + '\n'
 					+ "Total \t\t" + finalTotal);
+			// close iO
 			pw.close();
 		}
 
-		// Creates a receipt for multiple order for restaurant owners to have on file.
+		/**
+		 *  Same as above but for multiple order
+		 * @param multipleFoodOrder
+		 * @param multipleDrinksOrder
+		 * @throws IOException
+		 */
 		private void createReceiptMultiple(ArrayList<ArrayList<Food>> multipleFoodOrder, ArrayList<ArrayList<Drink>> multipleDrinksOrder) throws IOException
 		{
 			double total = 0;
 			double tax = 0.08;
 			double finalTotal = 0;
+			// iO setup
 			File receipt = new File("receipt.txt");
 			FileWriter fw = new FileWriter(receipt);
 			PrintWriter pw = new PrintWriter(fw);
+			// current time
 			LocalDateTime dateTime = LocalDateTime.now();
 			DateTimeFormatter formattedDateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 			String finalDateTime = dateTime.format(formattedDateTime);
+			// print
 			pw.println("Java Restaurant \n" + "7250 Mesa College Dr, San Diego, CA 92111 \n \n" + finalDateTime + "\n"
 					+ "--------------- \n" + "Name: " + customer1.getName() + "\t \t" + "Guest: " + multipleOrder);
+			// drink total
 			for (int i = 0; i < multipleDrinksOrder.size(); i++) 
 			{
 				for (int j = 0; j < multipleDrinksOrder.get(i).size(); j++) 
@@ -910,6 +1003,7 @@ public class Main {
 					total += multipleDrinksOrder.get(i).get(j).getPrice();
 				}
 			}
+			// food total
 			for (int i = 0; i < multipleFoodOrder.size(); i++) 
 			{
 				for (int j = 0; j < multipleFoodOrder.get(i).size(); j++) 
@@ -918,20 +1012,23 @@ public class Main {
 					total += multipleFoodOrder.get(i).get(j).getPrice();
 				}
 			}
+			// all total
 			finalTotal = (total * tax) + total;
 			pw.println("------------ \n" + "Subtotal: \t\t" + total + "\n" + "Tax \t\t" + (tax * total) + '\n'
 					+ "Total \t\t" + finalTotal);
+			// close iO
 			pw.close();
 		}
 
-		// method to create sushi Menu then add to array
-		public void createSushiMenu() {
+		/**
+		 *  method to create sushi Menu then add to array
+		 */
+		public void createSushiMenu() 
+		{
 			// name, ingredients, price, number of pieces, add on price, add on pieces
-			Sushi California = new MakiRolls("California roll", "Seaweed, rice, imitation crab, avocado", 8.0, 8, 4.99,
-					3);
+			Sushi California = new MakiRolls("California roll", "Seaweed, rice, imitation crab, avocado", 8.0, 8, 4.99, 3);
 			Sushi TunaRoll = new MakiRolls("Spicy Tuna Roll", "Seaweed, rice, tuna, avocado", 10.0, 8, 2.99, 3);
-			Sushi FriedRoll = new MakiRolls("Deep Fried",
-					"Seaweed, rice, imitation crab, avocado, honey mustard, shrimp", 10.0, 8, 3.99, 4);
+			Sushi FriedRoll = new MakiRolls("Deep Fried", "Seaweed, rice, imitation crab, avocado, honey mustard, shrimp", 10.0, 8, 3.99, 4);
 
 			Sushi Octopus = new Nigiri("Octopus Nigiri", "raw octopus, rice", 6.0, 4, 3.99, 4);
 			Sushi Salmon = new Nigiri("Salmon Nigiri", "raw salmon, rice", 5.0, 6, 2.99, 4);
@@ -945,8 +1042,11 @@ public class Main {
 			sushiArray.add(Tuna);
 		}
 
-		// method to create cooked food menu then add to array
-		public void createCookedMenu() {
+		/**
+		 *  method to create cooked food menu then add to array
+		 */
+		public void createCookedMenu() 
+		{
 			// name, ingredients, price
 			Cooked GrilledBeefRice = new RiceMeals("Grilled Beef", "Rice, beef, egg, tomatoes, lettuce", 10.0);
 			Cooked GrilledPorkRice = new RiceMeals("Grilled Pork", "Rice, pork, egg, tomatoes, lettuce", 10.0);
@@ -954,8 +1054,7 @@ public class Main {
 
 			Cooked ChickenPho = new Pho("Chicken Pho", "Noodle, chicken legs, green onions", 7.0);
 			Cooked CrispyPho = new Pho("Fried Crispy Pho", "Fried Noodle, bell peppers, beef", 9.00);
-			Cooked BeefPho = new Pho("Meatball Pho",
-					"Noodle, beef meatballs, raw thin beef slices, bean sprouts, green onions", 12.0);
+			Cooked BeefPho = new Pho("Meatball Pho", "Noodle, beef meatballs, raw thin beef slices, bean sprouts, green onions", 12.0);
 
 			cookedArray.add(GrilledBeefRice);
 			cookedArray.add(GrilledPorkRice);
@@ -965,7 +1064,11 @@ public class Main {
 			cookedArray.add(BeefPho);
 		}
 
-		public void createDrinkMenu() {
+		/**
+		 * method to create drink menu
+		 */
+		public void createDrinkMenu() 
+		{
 			Drink Coke = new Soda("Coca-Cola", 3.00, 44.0);
 			Drink Pepsi = new Soda("Pepsi", 2.00, 39.0);
 			Drink Sprite = new Soda("Sprite", 2.00, 44.0);
@@ -983,16 +1086,25 @@ public class Main {
 		}
 	}
 
-	public static void main(String args[]) throws IOException, CustomIllegalArgumentException, CreditCardException {
+	/**
+	 * main. start the program.
+	 * @param args
+	 * @throws IOException
+	 * @throws CustomIllegalArgumentException
+	 * @throws CreditCardException
+	 */
+	public static void main(String args[]) throws IOException, CustomIllegalArgumentException, CreditCardException 
+	{
 
 		Console con = new Console();
-		String input;
 
-		try {
+		try 
+		{
 			con.greeting();
-		} catch (IllegalArgumentException e) {
+		} 
+		catch (IllegalArgumentException e) 
+		{
 			e.printStackTrace();
 		}
 	}
-
 }
