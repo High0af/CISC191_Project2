@@ -11,8 +11,8 @@ public class Alcohol extends Drink
 
 	}
 	
-	public double optionInfo() {
-		return alcoholLevel;
+	public String optionInfo() {
+		return String.valueOf(alcoholLevel);
 	}
 
 	public String toString() {

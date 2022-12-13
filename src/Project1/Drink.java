@@ -20,7 +20,7 @@ public abstract class Drink
 		drinkPrice = drinkPrice + newPrice;
 	}
 	
-	public abstract double optionInfo();
+	public abstract String optionInfo();
 	public abstract String toString();
 	
 	public Drink()

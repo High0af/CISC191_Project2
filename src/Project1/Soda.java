@@ -10,13 +10,13 @@ public class Soda extends Drink
 		sugarAmount = itemSugar;
 	}
 	
-	public double optionInfo()
+	public String optionInfo()
 	{
-		return sugarAmount;
+		return "Sugar level: " + String.valueOf(sugarAmount);
 	}
 	public String toString()
 	{
-		return this.getDrinkName() + " for: " + this.getPrice() + "$";
+		return this.getDrinkName() + " for: " + String.valueOf(this.getPrice()) + "$";
 	}
 
 }

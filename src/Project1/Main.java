@@ -15,6 +15,8 @@ import java.util.ArrayList;
 /**
  * author: Johnny Hoang
  * 
+ * WORKING CODE AT BOTTOM
+ * 
  * to do: implement GUI
  * 
  * Version 1.0 (Current): A program that uses console to imitate an online ordering program. Take inputs from user through console.
@@ -22,6 +24,7 @@ import java.util.ArrayList;
  */
 public class Main
 {
+	// LEGACY STUFF
 //	// ArrayLists that will contain the menu
 //	static ArrayList<Food> sushiArray = new ArrayList<Food>();
 //	static ArrayList<Food> cookedArray = new ArrayList<Food>();
@@ -1127,6 +1130,9 @@ public class Main
 //		}
 //	}
 	
+	/*
+	 * start here
+	 */
 	// ArrayLists that will contain the menu
 	ArrayList<Food> sushiArray = new ArrayList<Food>();
 	ArrayList<Food> cookedArray = new ArrayList<Food>();
@@ -1156,6 +1162,7 @@ public class Main
 		this.createCookedMenu();
 		this.createSushiMenu();
 		this.createDrinkMenu();
+		customerDrinkOrder.add(new Soda("Coca-Cola", 3.00, 44.0));
 	}
 	
 	public void reset()
@@ -1200,6 +1207,11 @@ public class Main
 	public void setCode(String str)
 	{
 		cvcCode = str;
+	}
+	
+	public void addToDrink(Drink drinkObject)
+	{
+		customerDrinkOrder.add(drinkObject);
 	}
 	
 	public void createSushiMenu() 
